@@ -95,6 +95,22 @@ struct default_container_operator<std::vector<T, A>>{
 
 template<typename T>
 requires(sizeof(T) == 1)
+struct default_container_operator<std::span<T>>{
+  using target_type = std::span<T>;
+  using puller = contiguous_puller<T>;
+  static constexpr puller create_puller(const target_type& t)noexcept{
+    return {t.data()};
+  }
+  static inline std::size_t size(const target_type& t)noexcept{
+    return t.size();
+  }
+  static constexpr bool valid(const target_type& t)noexcept{
+    return t.empty() == false;
+  }
+};
+
+template<typename T>
+requires(sizeof(T) == 1)
 struct default_container_operator<std::pair<std::unique_ptr<T[]>, std::size_t>>{
   using target_type = std::pair<std::unique_ptr<T[]>, std::size_t>;
   static inline target_type construct(std::size_t size){
