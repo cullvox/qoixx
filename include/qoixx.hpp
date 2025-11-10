@@ -12,6 +12,7 @@
 #include<numeric>
 #include<array>
 #include<utility>
+#include<span>
 
 #ifndef QOIXX_NO_SIMD
 #if defined(__ARM_FEATURE_SVE)
